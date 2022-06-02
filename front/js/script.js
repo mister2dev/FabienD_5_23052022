@@ -1,4 +1,4 @@
-    fetch("http://localhost:3000/api/products")
+    fetch("http://localhost:3000/api/products/")
         .then(function(res){
             if(res.ok){
                 return res.json();
@@ -11,12 +11,7 @@
             'une erreur est survenue'
         })
 
-        .then(function(results){
-            const articles = results;
-            console.log(articles);
-
-            for (let article in articles) {
-
+        .then((value) => {
                 let productLink = document.createElement("a");
                 document.querySelector("section.items").appendChild(productLink);
 
@@ -25,12 +20,14 @@
 
                 let productImg = document.createElement("img");
                 document.querySelector("section article").appendChild(productImg);
-                productImg.src = articles[article].imageUrl;
 
                 let productH3 = document.createElement("h3");
                 document.querySelector("section article").appendChild(productH3);
 
                 let productDescription = document.createElement("p");
                 document.querySelector("section article").appendChild(productDescription);
-            }
-        });
+
+
+                let title = document.getElementById("title")
+                title.innerText = value.name
+        })
