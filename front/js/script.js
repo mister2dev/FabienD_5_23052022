@@ -4,25 +4,19 @@ function main(){
     getArticles();
 }
 
-function getArticles() {
+function getArticles(){
     fetch("http://localhost:3000/api/products")
         .then(function(res){
-                return res.json();
+            return res.json();
         })
-
-        .catch(function(error) {
-            alert(error)
-        })
-
-        .then(function(results){
-            const articles = results;
+        .then(function(articles){
             console.log(articles);
 
-            for (let article in articles) {
+            for (let article in articles){
 
                 let productLink = document.createElement("a");
                 document.querySelector("section.items").appendChild(productLink);
-                productLink.href = `product.html?id=${results[article]._id}`;
+                productLink.href = `product.html?id=${articles[article]._id}`;
 
                 let productArticle = document.createElement("article");
                 productLink.appendChild(productArticle);
@@ -42,5 +36,9 @@ function getArticles() {
                 productDescription.innerText = articles[article].description;
                 productDescription.classList.add("productDescription");
             }
+        })
+
+        .catch(function(error){
+            alert(error)
         });
     }
