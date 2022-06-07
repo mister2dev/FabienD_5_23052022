@@ -9,7 +9,7 @@ function getArticles(){
         .then(function(res){
             return res.json();
         })
-        
+         
 
 
         .catch(function(error) {
