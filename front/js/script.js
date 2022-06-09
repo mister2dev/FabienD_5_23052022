@@ -1,24 +1,20 @@
-main ()
+main()
 
 function main(){
     getArticles();
 }
 
+// Fonction de récupération des données articles de l'API
 function getArticles() {
     fetch("http://localhost:3000/api/products")
         .then(function(res){
                 return res.json();
         })
 
-        .catch(function(error) {
-            alert(error)
-        })
-
+// Fonction d'affichage des articles sur la page index (nom, description et image)
         .then(function(articles){
-            console.log(articles);
 
             for (let article in articles) {
-
                 let productLink = document.createElement("a");
                 document.querySelector("section.items").appendChild(productLink);
                 productLink.href = `product.html?id=${articles[article]._id}`;
@@ -41,5 +37,10 @@ function getArticles() {
                 productDescription.innerText = articles[article].description;
                 productDescription.classList.add("productDescription");
             }
+        })
+
+        .catch(function(error) {
+            alert(error)
         });
+
     }
