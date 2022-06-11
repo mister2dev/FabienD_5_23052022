@@ -17,7 +17,6 @@ function getArticles(){
         })
          
 
-
 // Fonction d'affichage des données de l'article
         .then(function(article){
         let productImg = document.createElement("img");
