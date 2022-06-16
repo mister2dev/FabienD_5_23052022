@@ -13,8 +13,9 @@ function getArticles(){
 // Fonction de récupération des données articles de l'API selon l'id
     fetch(`http://localhost:3000/api/products/${id}`)
         .then(function(res){
-                return res.json();
+            return res.json();
         })
+         
 
 // Fonction d'affichage des données de l'article
         .then(function(article){
