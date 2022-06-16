@@ -20,12 +20,16 @@ function getArticles() {
                 productLink.href = `product.html?id=${articles[article]._id}`;
 
                 let productArticle = document.createElement("article");
-                productLink.appendChild(productArticle);
-
                 let productImg = document.createElement("img");
+
+                productLink.appendChild(productArticle);
                 productArticle.appendChild(productImg);
                 productImg.src = articles[article].imageUrl;
                 productImg.alt = articles[article].altTxt;
+
+                productArticle.appendChild(
+                    createElement('h3', articles[article].name,'productName')
+                );
 
                 let productH3 = document.createElement("h3");
                 productArticle.appendChild(productH3);
