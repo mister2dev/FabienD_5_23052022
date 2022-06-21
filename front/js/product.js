@@ -51,14 +51,27 @@ function getArticles(){
     let addToCartBtn = document.getElementById("addToCart");
     addToCartBtn.addEventListener("click", addToCart);
 
+    let objectTest = {
+        Id : 32165161561,
+        Color : "black",
+        Quantity : 2,
+    }
+
+    localStorage.setItem ("objectCart", "kanap")
+    localStorage.setItem ("objecKey", objectTest.Color)
+    localStorage.setItem
+
 function addToCart(){
 
     const colorChoice = document.querySelector("colors");
     const quantityChoice = document.querySelector("quantity");
 
-    if (quantityChoice.value > 0 && quantityChoice.value <= 100 ) {
-        let objectCart = {
-            id : 
-        }
-    }
+//    if (quantityChoice.value > 0 && quantityChoice.value <= 100 ) {
+//      let objectCart = {
+//        _id : id,
+
+//        }
+//    } else {
+//
+//    }
 }
