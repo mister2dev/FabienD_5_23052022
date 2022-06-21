@@ -14,31 +14,36 @@ function getArticles() {
 // Fonction d'affichage des articles sur la page index (nom, description et image)
         .then(function(articles){
 
-            for (let article in articles) {
+            for (let article of articles) {
                 let productLink = document.createElement("a");
                 document.querySelector("section.items").appendChild(productLink);
-                productLink.href = `product.html?id=${articles[article]._id}`;
+                productLink.href = `product.html?id=${article._id}`;
 
                 let productArticle = document.createElement("article");
                 let productImg = document.createElement("img");
 
                 productLink.appendChild(productArticle);
                 productArticle.appendChild(productImg);
-                productImg.src = articles[article].imageUrl;
-                productImg.alt = articles[article].altTxt;
+                productImg.src = article.imageUrl;
+                productImg.alt = article.altTxt;
 
-                productArticle.appendChild(
-                    createElement('h3', articles[article].name,'productName')
-                );
+//                productArticle.appendChild(
+//                    document.createElement("h3", article.name,"productName")
+//                );
+
+//                productArticle.appendChild(
+//                    document.createElement("p", article.description, "productDescription")
+//                );
+
 
                 let productH3 = document.createElement("h3");
                 productArticle.appendChild(productH3);
-                productH3.innerText = articles[article].name;
+                productH3.innerText = article.name;
                 productH3.classList.add("productName");
 
                 let productDescription = document.createElement("p");
                 productArticle.appendChild(productDescription);
-                productDescription.innerText = articles[article].description;
+                productDescription.innerText = article.description;
                 productDescription.classList.add("productDescription");
             }
         })

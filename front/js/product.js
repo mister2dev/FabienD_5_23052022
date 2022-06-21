@@ -2,6 +2,7 @@ main()
 
 function main(){
     getArticles();
+    addToCart();
 }
 
 // Fonction de récupération de l'id dans l'url
@@ -15,7 +16,7 @@ function getArticles(){
         .then(function(res){
             return res.json();
         })
-         
+
 
 // Fonction d'affichage des données de l'article
         .then(function(article){
@@ -34,10 +35,10 @@ function getArticles(){
         productDescription.innerText = article.description;
 
         let colorSelect = document.getElementById("colors");
-            for (let i=0; i < article.colors.length; i++) {
+            for (let color of article.colors) {
                 let option = document.createElement("option");
-                option.setAttribute("value", article.colors[i]);
-                option.innerText = article.colors[i];
+                option.setAttribute("value", color);
+                option.innerText = color;
                 colorSelect.appendChild(option);
             }
         })
@@ -45,4 +46,19 @@ function getArticles(){
         .catch(function(error) {
             alert(error)
         });
+}
+
+    let addToCartBtn = document.getElementById("addToCart");
+    addToCartBtn.addEventListener("click", addToCart);
+
+function addToCart(){
+
+    const colorChoice = document.querySelector("colors");
+    const quantityChoice = document.querySelector("quantity");
+
+    if (quantityChoice.value > 0 && quantityChoice.value <= 100 ) {
+        let objectCart = {
+            id : 
+        }
+    }
 }
