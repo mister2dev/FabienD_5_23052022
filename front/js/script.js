@@ -27,13 +27,19 @@ function getArticles() {
                 productImg.src = article.imageUrl;
                 productImg.alt = article.altTxt;
 
-//                productArticle.appendChild(
-//                    document.createElement("h3", article.name,"productName")
-//                );
+                // productArticle.appendChild(
+                //     document.createElm ("h3", article.name,"productName")
+                // );
 
-//                productArticle.appendChild(
-//                    document.createElement("p", article.description, "productDescription")
-//                );
+                // productArticle.appendChild(
+                //     document.createElm ("p", article.description, "productDescription")
+                // );
+
+                // function createElm (balise, content, className){
+                //     document.createElement(balise);
+                //     balise.innerText = content;
+                //     balise.classList.add(className);
+                // };
 
 
                 let productH3 = document.createElement("h3");
