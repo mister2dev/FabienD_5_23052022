@@ -28,17 +28,17 @@ function getArticles() {
                 productImg.alt = article.altTxt;
 
                 // productArticle.appendChild(
-                //     document.createElm ("h3", article.name,"productName")
+                //     createElm ("h3", article.name,"productName")
                 // );
 
                 // productArticle.appendChild(
-                //     document.createElm ("p", article.description, "productDescription")
+                //     createElm ("p", article.description, "productDescription")
                 // );
 
-                // function createElm (balise, content, className){
+                // function createElm (balise, content, classTitle){
                 //     document.createElement(balise);
                 //     balise.innerText = content;
-                //     balise.classList.add(className);
+                //     balise.classList.add(classTitle);
                 // };
 
 

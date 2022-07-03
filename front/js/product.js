@@ -57,21 +57,41 @@ function getArticles(){
     //     Quantity : 2,
     // }
 
-    // localStorage.setItem ("objectCart", "kanap")
+    // localStorage.setItem ("productId", objectTest.Id)
     // localStorage.setItem ("objecKey", objectTest.Color)
-    // localStorage.setItem
+    // localStorage.setItem ("Qty", objectTest.Quantity)
 
 function addToCart(){
 
-    const colorChoice = document.querySelector("#colors");
+    // const colorChoice = document.querySelector("#colors");
     const quantityChoice = document.querySelector("#quantity");
 
    if (quantityChoice.value > 0 && quantityChoice.value <= 100 ) {
-     let objectCart = {
-       _id : id,
-       quantity : document.querySelector("#quantity").value,
-       color : document.querySelector("#colors").value,
-       }
+    let productCart = []
+
+    let idKanap = id
+    let colorKanap = document.querySelector("#colors").value;
+    let qtyKanap = document.querySelector("#quantity").value;
+
+    let productCartObject = {
+        idKanap : id,
+        colorKanap : colorKanap,
+        qtyKanap : qtyKanap,
+    };
+
+    productCart.push(productCartObject);
+
+    let objCart = JSON.stringify(productCart);
+    localStorage.setItem("cart", objCart);
+
+
+    alert("Ajouté au panier !");
+
+    // let objectCart = {
+    //    _id : id,
+    //    quantity : document.querySelector("#quantity").value,
+    //    color : document.querySelector("#colors").value,
+    //    }
    } else {
 
    }
