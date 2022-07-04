@@ -6,7 +6,6 @@ main()
 
 function main(){
     getArticles();
-    addToCart();
 }
 
 // Fonction de récupération de l'id dans l'url

@@ -27,35 +27,37 @@ function getArticles() {
                 productImg.src = article.imageUrl;
                 productImg.alt = article.altTxt;
 
-                // productArticle.appendChild(
-                //     createElm ("h3", article.name,"productName")
-                // );
+                productArticle.appendChild(
+                    createElm ("h3", article.name,"productName")
+                );
 
-                // productArticle.appendChild(
-                //     createElm ("p", article.description, "productDescription")
-                // );
+                productArticle.appendChild(
+                    createElm ("p", article.description, "productDescription")
+                
+                );
 
-                // function createElm (balise, content, classTitle){
-                //     document.createElement(balise);
-                //     balise.innerText = content;
-                //     balise.classList.add(classTitle);
-                // };
+                function createElm (balise, content, classTitle){
+                    let productObject = document.createElement(balise);
+                    productObject.innerText = content;
+                    productObject.classList.add(classTitle); 
+                    return productObject
+                };
 
 
-                let productH3 = document.createElement("h3");
-                productArticle.appendChild(productH3);
-                productH3.innerText = article.name;
-                productH3.classList.add("productName");
+                // let productH3 = document.createElement("h3");
+                // productArticle.appendChild(productH3);
+                // productH3.innerText = article.name;
+                // productH3.classList.add("productName");
 
-                let productDescription = document.createElement("p");
-                productArticle.appendChild(productDescription);
-                productDescription.innerText = article.description;
-                productDescription.classList.add("productDescription");
+                // let productDescription = document.createElement("p");
+                // productArticle.appendChild(productDescription);
+                // productDescription.innerText = article.description;
+                // productDescription.classList.add("productDescription");
             }
         })
 
         .catch(function(error) {
-            alert(error)
+            console.log(error)
         });
 
     }
