@@ -11,13 +11,13 @@ function main(){
 // Fonction de récupération de l'id dans l'url
 function getArticles(){
 
-// Fonction de récupération des données articles de l'API selon l'id
+    // Fonction de récupération des données articles de l'API selon l'id
     fetch(`http://localhost:3000/api/products/${id}`)
         .then(function(res){
             return res.json();
         })
 
-// Fonction d'affichage des données de l'article
+        // Fonction d'affichage des données de l'article
         .then(function(article){
             let productImg = document.createElement("img");
             document.querySelector("div.item__img").appendChild(productImg);
@@ -54,29 +54,29 @@ function addToCart(){
     const quantityChoice = document.querySelector("#quantity");
     const colorChoice = document.querySelector('#colors');
 
+    //  création d'un array
+    let productCart = []
+    //  création des variables du produit    
+    let idKanap = id
+    let colorKanap = document.querySelector("#colors").value;
+    let qtyKanap = document.querySelector("#quantity").value;
+
+    //  création de l'objet produit
+    let productCartObject = {
+        idKanap : idKanap,
+        colorKanap : colorKanap,
+        qtyKanap : qtyKanap,
+    };
+
     if (quantityChoice.value > 0 && quantityChoice.value <= 100 & colorChoice.value != 0) {
-//  création d'un array
-        let productCart = []
-//  création des variables du produit    
-        let idKanap = id
-        let colorKanap = document.querySelector("#colors").value;
-        let qtyKanap = document.querySelector("#quantity").value;
 
-//  création de l'objet produit
-        let productCartObject = {
-            idKanap : idKanap,
-            colorKanap : colorKanap,
-            qtyKanap : qtyKanap,
-        };
-
-//  test si il y a déjà des produits dans le local storage
+        //  test si il y a déjà des produits dans le local storage
         if (localStorage.getItem("cart")){
-            productCart = JSON.parse(localStorage.getItem("cart"));
+            let productCart = JSON.parse(localStorage.getItem("cart"));
             console.log(productCart);
 
-//  test si le produit commandé est déjà dans le panier
-            const resultFind = productCart.find(
-            alreadyInCart => alreadyInCart.idKanap === id && alreadyInCart.colorKanap === colorKanap);
+            //  test si le produit commandé est déjà dans le panier
+            const resultFind = productCart.find(alreadyInCart => alreadyInCart.idKanap === id && alreadyInCart.colorKanap === colorKanap);
             console.log("result find :");
             console.log(resultFind);
 
@@ -85,21 +85,22 @@ function addToCart(){
                 console.log("upDateQty : " + upDateQty);
                 resultFind.qtyKanap = upDateQty.toString();
                 localStorage.setItem("cart", JSON.stringify(productCart));
-                console.log("productCart egal :");
                 console.log(productCart);
             } else {
                 productCart.push(productCartObject);
+                let objCart = JSON.stringify(productCart);
                 localStorage.setItem("cart", objCart);
+                console.log(productCart);
                 alert("Ajouté au panier !")
             }
         } else {
-//  on injecte l'objet dans le array
+        //  on injecte l'objet dans le array
         productCart.push(productCartObject);
 
-// on injecte le tout dans le local storage
+        // on injecte le tout dans le local storage
         let objCart = JSON.stringify(productCart);
         localStorage.setItem("cart", objCart);
-
+        console.log(productCart);
         alert("Ajouté au panier !");
         }
     }
