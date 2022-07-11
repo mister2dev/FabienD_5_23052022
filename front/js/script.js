@@ -33,7 +33,6 @@ function getArticles() {
 
                 productArticle.appendChild(
                     createElm ("p", article.description, "productDescription")
-                
                 );
 
                 function createElm (balise, content, classTitle){
