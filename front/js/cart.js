@@ -40,7 +40,8 @@ function displayCart (){
             let productImg = document.createElement("img");
             productDivImg.appendChild(productImg);
             productImg.src = productLocalStorage[i].imgKanap;
-            productImg.alt = ;
+            productImg.src = productLocalStorage[i].imgKanap;
+            productImg.alt = productLocalStorage.altImgProduit;
 
             // Insertion de l'élément "div" pour la description produit
             let productItemContent = document.createElement("div");
@@ -55,7 +56,7 @@ function displayCart (){
             // Insertion du titre h2
             let productTitle = document.createElement("h2");
             productItemContentTitlePrice.appendChild(productTitle);
-            productTitle.innerHTML = ;
+            productTitle.innerHTML = productLocalStorage[i].nameKanap;
 
             // Insertion de la couleur
             let productColor = document.createElement("p");
@@ -65,7 +66,7 @@ function displayCart (){
             // Insertion du prix
             let productPrice = document.createElement("p");
             productItemContentTitlePrice.appendChild(productPrice);
-            productPrice.innerHTML = ;
+            productPrice.innerHTML = productLocalStorage[i].priceKanap + " €";
 
         }    
     }
