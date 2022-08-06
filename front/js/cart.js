@@ -126,3 +126,11 @@ function displayCart (){
         }    
     }
 }
+
+function getTotal(){
+    // récupération des quantitées total
+    
+
+    // récupération du prix total
+
+}

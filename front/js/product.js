@@ -65,8 +65,8 @@ function addToCart(){
     let colorKanap = document.querySelector("#colors").value;
     let qtyKanap = document.querySelector("#quantity").value;
     let nameKanap = document.querySelector("#title").textContent;
-    let imgKanap = document.querySelector(".item__img") .src;
-    let altImg = img.alt;
+    let imgKanap = document.querySelector("div.item__img img").src;
+    let altTxt = document.querySelector("div.item__img img").alt;
     let priceKanap = document.querySelector("#price").textContent;
 
     //  création de l'objet produit
@@ -76,7 +76,7 @@ function addToCart(){
         qtyKanap,
         nameKanap,
         imgKanap,
-        altImg,
+        altTxt,
         priceKanap
     };
 
