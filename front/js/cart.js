@@ -1,9 +1,3 @@
-main()
-
-function main(){
-    displayCart();
-}
-
 function displayCart (){
     //  test si il y a déjà des produits dans le local storage
     let productLocalStorage = JSON.parse(localStorage.getItem("cart"));
@@ -127,22 +121,24 @@ function displayCart (){
     }
 }
 
+displayCart();
+
 let numberTotal = 0;
 let priceTotal = 0;
 let productLocalStorage = JSON.parse(localStorage.getItem("cart"));
 
 
-    // récupération des quantitées total
-    const getTotal = () => {
-        if (productLocalStorage) {
-            for (let t = 0; t < productLocalStorage.length; t++) {
-                numberTotal += parseInt(productLocalStorage[t].qtyKanap);
-                priceTotal += parseInt(productLocalStorage[t].priceKanap) * parseInt(productLocalStorage[t].qtyKanap)
-            }
+// récupération des quantitées total
+const getTotal = () => {
+    if (productLocalStorage) {
+        for (let t = 0; t < productLocalStorage.length; t++) {
+            numberTotal += parseInt(productLocalStorage[t].qtyKanap);
+            priceTotal += parseInt(productLocalStorage[t].priceKanap) * parseInt(productLocalStorage[t].qtyKanap)
         }
     }
+}
 
-    // récupération du prix total
+// récupération du prix total
 
 getTotal();
 
@@ -150,5 +146,6 @@ function displayResults() {
     document.querySelector("#totalQuantity").innerHTML = numberTotal;
     document.querySelector("#totalPrice").innerHTML = priceTotal;
   }
-  displayResults();
+
+displayResults();
   
