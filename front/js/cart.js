@@ -148,4 +148,17 @@ function displayResults() {
   }
 
 displayResults();
+
+function quantityChange() {
+    let QtyChange = document.querySelectorAll(".itemQuantity");
+
+    for (let i = 0; i < QtyChange.length; i++) {
+        QtyChange[i].addEventListener("change" , (event) => {
+            event.preventDefault();
+
+            
+        });
+        
+    }
+}
   
