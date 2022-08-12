@@ -123,27 +123,25 @@ function displayCart (){
 
 displayCart();
 
-let numberTotal = 0;
+let qtyTotal = 0;
 let priceTotal = 0;
 let productLocalStorage = JSON.parse(localStorage.getItem("cart"));
 
 
-// récupération des quantitées total
-const getTotal = () => {
+// récupération des quantitées total et du prix total
+function getTotal() {
     if (productLocalStorage) {
         for (let t = 0; t < productLocalStorage.length; t++) {
-            numberTotal += parseInt(productLocalStorage[t].qtyKanap);
+            qtyTotal += parseInt(productLocalStorage[t].qtyKanap);
             priceTotal += parseInt(productLocalStorage[t].priceKanap) * parseInt(productLocalStorage[t].qtyKanap)
         }
     }
 }
 
-// récupération du prix total
-
 getTotal();
 
 function displayResults() {
-    document.querySelector("#totalQuantity").innerHTML = numberTotal;
+    document.querySelector("#totalQuantity").innerHTML = qtyTotal;
     document.querySelector("#totalPrice").innerHTML = priceTotal;
   }
 
@@ -152,13 +150,16 @@ displayResults();
 function quantityChange() {
     let QtyChange = document.querySelectorAll(".itemQuantity");
 
-    for (let i = 0; i < QtyChange.length; i++) {
-        QtyChange[i].addEventListener("change" , (event) => {
-            event.preventDefault();
-
+    if (productLocalStorage){
+        for (let i = 0; i < QtyChange.length; i++) {
+            QtyChange[i].addEventListener("change" , (event) => {
+                event.preventDefault();
+    
+                
+            });
             
-        });
-        
+        }
+    
     }
 }
   
