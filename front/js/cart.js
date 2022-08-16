@@ -155,11 +155,25 @@ function quantityChange() {
             QtyChange[i].addEventListener("change" , (event) => {
                 event.preventDefault();
     
-                
+            //Selection de l'element à modifier en fonction de son id ET sa couleur
+            let quantityModif = productLocalStorage[i].qtyKanap;
+            let qttModifValue = QtyChange[i].valueAsNumber;
+            
+            const resultFind = productLocalStorage.find((el) => el.qttModifValue !== quantityModif);
+
+            resultFind.qtyKanap = qttModifValue;
+            productLocalStorage[i].qtyKanap = resultFind.qtyKanap;
+
+            localStorage.setItem("cart", JSON.stringify(productLocalStorage));
+        
+            // refresh rapide
+            location.reload();
+
             });
             
         }
     
     }
 }
-  
+
+quantityChange();
