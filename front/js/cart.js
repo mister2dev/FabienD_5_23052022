@@ -148,31 +148,28 @@ function displayResults() {
 displayResults();
 
 function quantityChange() {
-    let QtyChange = document.querySelectorAll(".itemQuantity");
+    let qtyChange = document.querySelectorAll(".itemQuantity");
 
     if (productLocalStorage){
-        for (let i = 0; i < QtyChange.length; i++) {
-            QtyChange[i].addEventListener("change" , (event) => {
+        for (let i = 0; i < qtyChange.length; i++) {
+            qtyChange[i].addEventListener("change" , (event) => {
                 event.preventDefault();
     
-            //Selection de l'element à modifier en fonction de son id ET sa couleur
-            let quantityModif = productLocalStorage[i].qtyKanap;
-            let qttModifValue = QtyChange[i].valueAsNumber;
+            //Selection de l'element à modifier
+            let qtyToModify = productLocalStorage[i].qtyKanap;
+            let qtyModifValue = qtyChange[i].valueAsNumber;
             
-            const resultFind = productLocalStorage.find((el) => el.qttModifValue !== quantityModif);
+            const resultFind = productLocalStorage.find((el) => el.qtyModifValue !== qtyToModify);
 
-            resultFind.qtyKanap = qttModifValue;
+            resultFind.qtyKanap = qtyModifValue;
             productLocalStorage[i].qtyKanap = resultFind.qtyKanap;
 
             localStorage.setItem("cart", JSON.stringify(productLocalStorage));
         
             // refresh rapide
             location.reload();
-
             });
-            
         }
-    
     }
 }
 
