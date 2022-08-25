@@ -148,16 +148,16 @@ function displayResults() {
 displayResults();
 
 function quantityChange() {
-    let qtyChange = document.querySelectorAll(".itemQuantity");
-
+    let itemQtyChange = document.querySelectorAll(".itemQuantity");
+    console.log(itemQtyChange)
     if (productLocalStorage){
-        for (let i = 0; i < qtyChange.length; i++) {
-            qtyChange[i].addEventListener("change" , (event) => {
+        for (let i = 0; i < itemQtyChange.length; i++) {
+            itemQtyChange[i].addEventListener("change" , (event) => {
                 event.preventDefault();
     
             //Selection de l'element à modifier
             let qtyToModify = productLocalStorage[i].qtyKanap;
-            let qtyModifValue = qtyChange[i].valueAsNumber;
+            let qtyModifValue = itemQtyChange[i].valueAsNumber;
             
             const resultFind = productLocalStorage.find((el) => el.qtyModifValue !== qtyToModify);
 
