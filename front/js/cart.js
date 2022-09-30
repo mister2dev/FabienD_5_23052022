@@ -150,6 +150,7 @@ displayResults();
 function quantityChange() {
     let itemQtyChange = document.querySelectorAll(".itemQuantity");
     console.log(itemQtyChange)
+            console.log(productLocalStorage)
     if (productLocalStorage){
         for (let i = 0; i < itemQtyChange.length; i++) {
             itemQtyChange[i].addEventListener("change" , (event) => {
@@ -157,6 +158,7 @@ function quantityChange() {
     
             //Selection de l'element à modifier
             let qtyToModify = productLocalStorage[i].qtyKanap;
+
             let qtyModifValue = itemQtyChange[i].valueAsNumber;
             
             const resultFind = productLocalStorage.find((el) => el.qtyModifValue !== qtyToModify);
