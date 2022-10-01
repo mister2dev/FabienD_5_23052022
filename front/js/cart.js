@@ -148,55 +148,40 @@ function displayResults() {
 displayResults();
 
 function quantityChange() {
-<<<<<<< HEAD
-    // let qtyChange = document.querySelectorAll(".itemQuantity");
-    let qtyChange = document.getElementsByClassName("itemQuantity");
-
-=======
     let itemQtyChange = document.querySelectorAll(".itemQuantity");
-    console.log(itemQtyChange)
-            console.log(productLocalStorage)
->>>>>>> afa02e8592c15995fbea1cbcc377c30f69c60ce2
+    // let qtyChange = document.getElementsByClassName("itemQuantity");
+
     if (productLocalStorage){
         for (let i = 0; i < itemQtyChange.length; i++) {
             itemQtyChange[i].addEventListener("change" , (event) => {
                 event.preventDefault();
     
-<<<<<<< HEAD
-=======
+            
+
+            // const newLocalStorage = {
+            //     idKanap: productLocalStorage[i].idKanap,
+            //     imgKanap: productLocalStorage[i].imgKanap,
+            //     altTxt: productLocalStorage[i].altTxt,
+            //     nameKanap: productLocalStorage[i].nameKanap,
+            //     colorKanap: productLocalStorage[i].colorKanap,
+            //     priceKanap: productLocalStorage[i].priceKanap,
+            //     qtyKanap: qtyChange[i].value,
+            //     };
+
             //Selection de l'element à modifier
             let qtyToModify = productLocalStorage[i].qtyKanap;
-
             let qtyModifValue = itemQtyChange[i].valueAsNumber;
->>>>>>> afa02e8592c15995fbea1cbcc377c30f69c60ce2
             
+            const resultFind = productLocalStorage.find((el) => el.qtyModifValue !== qtyToModify);
 
-            const newLocalStorage = {
-                idKanap: productLocalStorage[i].idKanap,
-                imgKanap: productLocalStorage[i].imgKanap,
-                altTxt: productLocalStorage[i].altTxt,
-                nameKanap: productLocalStorage[i].nameKanap,
-                colorKanap: productLocalStorage[i].colorKanap,
-                priceKanap: productLocalStorage[i].priceKanap,
-                qtyKanap: qtyChange[i].value,
-                };
-
-            // //Selection de l'element à modifier
-            // let qtyToModify = productLocalStorage[i].qtyKanap;
-            // let qtyModifValue = qtyChange[i].valueAsNumber;
-            
-            // const resultFind = productLocalStorage.find((el) => el.qtyModifValue !== qtyToModify);
-
-            // resultFind.qtyKanap = qtyModifValue;
-            // productLocalStorage[i].qtyKanap = resultFind.qtyKanap;
-            productLocalStorage[i] = newLocalStorage;
+            resultFind.qtyKanap = qtyModifValue;
+            productLocalStorage[i].qtyKanap = resultFind.qtyKanap;
+            // productLocalStorage[i] = newLocalStorage;
             localStorage.setItem("cart", JSON.stringify(productLocalStorage));
 
-            getTotal();
-            displayResults();
-        
+                
             // refresh rapide
-            // location.reload();
+            location.reload();
             });
         }
     }
