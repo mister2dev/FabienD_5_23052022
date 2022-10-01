@@ -148,26 +148,42 @@ function displayResults() {
 displayResults();
 
 function quantityChange() {
-    let qtyChange = document.querySelectorAll(".itemQuantity");
+    // let qtyChange = document.querySelectorAll(".itemQuantity");
+    let qtyChange = document.getElementsByClassName("itemQuantity");
 
     if (productLocalStorage){
         for (let i = 0; i < qtyChange.length; i++) {
             qtyChange[i].addEventListener("change" , (event) => {
                 event.preventDefault();
     
-            //Selection de l'element à modifier
-            let qtyToModify = productLocalStorage[i].qtyKanap;
-            let qtyModifValue = qtyChange[i].valueAsNumber;
             
-            const resultFind = productLocalStorage.find((el) => el.qtyModifValue !== qtyToModify);
 
-            resultFind.qtyKanap = qtyModifValue;
-            productLocalStorage[i].qtyKanap = resultFind.qtyKanap;
+            const newLocalStorage = {
+                idKanap: productLocalStorage[i].idKanap,
+                imgKanap: productLocalStorage[i].imgKanap,
+                altTxt: productLocalStorage[i].altTxt,
+                nameKanap: productLocalStorage[i].nameKanap,
+                colorKanap: productLocalStorage[i].colorKanap,
+                priceKanap: productLocalStorage[i].priceKanap,
+                qtyKanap: qtyChange[i].value,
+                };
 
+            // //Selection de l'element à modifier
+            // let qtyToModify = productLocalStorage[i].qtyKanap;
+            // let qtyModifValue = qtyChange[i].valueAsNumber;
+            
+            // const resultFind = productLocalStorage.find((el) => el.qtyModifValue !== qtyToModify);
+
+            // resultFind.qtyKanap = qtyModifValue;
+            // productLocalStorage[i].qtyKanap = resultFind.qtyKanap;
+            productLocalStorage[i] = newLocalStorage;
             localStorage.setItem("cart", JSON.stringify(productLocalStorage));
+
+            getTotal();
+            displayResults();
         
             // refresh rapide
-            location.reload();
+            // location.reload();
             });
         }
     }
