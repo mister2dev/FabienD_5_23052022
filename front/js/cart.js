@@ -148,14 +148,27 @@ function displayResults() {
 displayResults();
 
 function quantityChange() {
+<<<<<<< HEAD
     // let qtyChange = document.querySelectorAll(".itemQuantity");
     let qtyChange = document.getElementsByClassName("itemQuantity");
 
+=======
+    let itemQtyChange = document.querySelectorAll(".itemQuantity");
+    console.log(itemQtyChange)
+            console.log(productLocalStorage)
+>>>>>>> afa02e8592c15995fbea1cbcc377c30f69c60ce2
     if (productLocalStorage){
-        for (let i = 0; i < qtyChange.length; i++) {
-            qtyChange[i].addEventListener("change" , (event) => {
+        for (let i = 0; i < itemQtyChange.length; i++) {
+            itemQtyChange[i].addEventListener("change" , (event) => {
                 event.preventDefault();
     
+<<<<<<< HEAD
+=======
+            //Selection de l'element à modifier
+            let qtyToModify = productLocalStorage[i].qtyKanap;
+
+            let qtyModifValue = itemQtyChange[i].valueAsNumber;
+>>>>>>> afa02e8592c15995fbea1cbcc377c30f69c60ce2
             
 
             const newLocalStorage = {
