@@ -179,7 +179,7 @@ function quantityChange() {
             // productLocalStorage[i] = newLocalStorage;
             localStorage.setItem("cart", JSON.stringify(productLocalStorage));
 
-                
+            //test    
             // refresh rapide
             location.reload();
             });
