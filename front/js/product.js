@@ -54,9 +54,9 @@ function addToCart(){
     const quantityChoice = document.querySelector("#quantity");
     const colorChoice = document.querySelector('#colors');
 
-    let imgProduct = document.querySelector(".item__img");
-    let img = document.createElement("img");
-    imgProduct.appendChild(img);
+    // let imgProduct = document.querySelector(".item__img");
+    // let img = document.createElement("img");
+    // imgProduct.appendChild(img);
 
     //  création d'un array
     let productCart = []

@@ -149,42 +149,26 @@ displayResults();
 
 function quantityChange() {
     let itemQtyChange = document.querySelectorAll(".itemQuantity");
-    // let qtyChange = document.getElementsByClassName("itemQuantity");
-
-    if (productLocalStorage){
-        for (let i = 0; i < itemQtyChange.length; i++) {
-            itemQtyChange[i].addEventListener("change" , (event) => {
-                event.preventDefault();
-    
-            
-
-            // const newLocalStorage = {
-            //     idKanap: productLocalStorage[i].idKanap,
-            //     imgKanap: productLocalStorage[i].imgKanap,
-            //     altTxt: productLocalStorage[i].altTxt,
-            //     nameKanap: productLocalStorage[i].nameKanap,
-            //     colorKanap: productLocalStorage[i].colorKanap,
-            //     priceKanap: productLocalStorage[i].priceKanap,
-            //     qtyKanap: qtyChange[i].value,
-            //     };
-
-            //Selection de l'element à modifier
-            let qtyToModify = productLocalStorage[i].qtyKanap;
-            let qtyModifValue = itemQtyChange[i].valueAsNumber;
-            
-            const resultFind = productLocalStorage.find((el) => el.qtyModifValue !== qtyToModify);
-
-            resultFind.qtyKanap = qtyModifValue;
-            productLocalStorage[i].qtyKanap = resultFind.qtyKanap;
-            // productLocalStorage[i] = newLocalStorage;
-            localStorage.setItem("cart", JSON.stringify(productLocalStorage));
-
-            //test    
-            // refresh rapide
-            location.reload();
-            });
+    if (productLocalStorage) {
+        for (let c = 0; c < productLocalStorage.length; c++) {
+          itemQtyChange[c].addEventListener("change", function () {
+            if (itemQtyChange[c].value > 0) {
+              //Modification des totaux + affichage
+              let quantityDiff = itemQtyChange[c].value - productLocalStorage[c].qtyKanap;
+              qtyTotal += quantityDiff;
+              priceTotal += quantityDiff * productLocalStorage[c].priceKanap;
+              displayResults();
+              //Ajout des modifications dans le localStorage
+              productLocalStorage[c].qtyKanap = itemQtyChange[c].value;
+              localStorage.setItem("cart", JSON.stringify(productLocalStorage));
+              //Affichage du nouveau prix du produit
+              productPrice[c].innerHTML =
+                parseInt(productLocalStorage[c].qtyKanap) *
+                parseInt(productLocalStorage[c].priceKanap) +
+                " €";
+             }
+          });
         }
-    }
-}
-
+      }
+    };
 quantityChange();
