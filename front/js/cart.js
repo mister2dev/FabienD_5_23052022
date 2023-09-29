@@ -172,3 +172,156 @@ function quantityChange() {
       }
     };
 quantityChange();
+
+
+
+//////////////////////////// Formulaire ////////////////////////////
+
+form = () => {
+    const order = document.getElementById("order");
+    // console.log(order);
+
+    order.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      // Récupération des données du formulaire dans un objet
+      const contact = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        address: document.getElementById("address").value,
+        city: document.getElementById("city").value,
+        email: document.getElementById("email").value,
+      };
+
+      function validInput() {
+        
+        // Contrôle du prénom
+        formFirstName = () => {
+          const validFirstName = contact.firstName;
+          if (/^[a-zA-Z--]{2,20}$/.test(validFirstName)) { 
+            firstNameErrorMsg.innerHTML = ""
+            return true;
+          } else {
+            let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+            firstNameErrorMsg.innerHTML = "Prénom invalide";
+          }
+        };
+
+        // Contrôle du nom
+        formName = () => {
+          const validName = contact.lastName;
+
+          if (/^[a-zA-Z\s-]{2,20}$/.test(validName)) {
+            lastNameErrorMsg.innerHTML = ""
+            return true;
+          } else {
+            let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+            lastNameErrorMsg.innerHTML = "Nom invalide";
+          }
+        };
+
+        // Contrôle de l'adresse
+        formAddress = () => {
+          const validAddress = contact.address;
+          if (/^[a-zA-Z0-9\s-]{2,50}$/.test(validAddress)) {
+            addressErrorMsg.innerHTML = ""
+            return true;
+          } else {
+            let addressErrorMsg = document.getElementById("addressErrorMsg");
+            addressErrorMsg.innerHTML = "Adresse invalide";
+          }
+        };
+
+        // Contrôle de la ville
+        formCity = () => {
+          const validAddress = contact.city;
+          if (/^[a-zA-Z-\s-]{2,20}$/.test(validAddress)) {
+            cityErrorMsg.innerHTML = ""
+            return true;
+          } else {
+            let cityErrorMsg = document.getElementById("cityErrorMsg");
+            cityErrorMsg.innerHTML = "Ville invalide";
+          }
+        };
+
+        // Contrôle de l'email
+        //   [a-zA-Z0-9-_]{1,}@[a-zA-Z0-9-_]{1,}.[a-zA-Z]{1,}
+        formEmail = () => {
+          const validEmail = contact.email;
+          if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(validEmail)) {
+            emailErrorMsg.innerHTML = ""
+            return true;
+          } else {
+            let emailErrorMsg = document.getElementById("emailErrorMsg");
+            emailErrorMsg.innerHTML = "Mail invalide";
+          }
+        };
+      }
+
+      validInput();
+      // Contrôleur
+      // Vérification des informations récupérées
+      //Refresh rapide de la page
+      //location.reload();
+
+      formCheck = () => {
+        if (
+          formFirstName() &&
+          formName() &&
+          formAddress() &&
+          formCity() &&
+          formEmail()
+        ) {
+          // Envoi des informations dans le local storage
+          // localStorage.setItem('contact', JSON.stringify(contact)); // données utilisateur
+          // Méthode booléan
+          return true;
+
+        } else {
+          alert("Une erreur est survenue, merci de vérifier vos informations");
+        }
+      };
+
+      formCheck();
+
+
+      //Construction d'un array d'id depuis le local storage
+      let products = [];
+      for (let i = 0; i<productLocalStorage.length;i++) {
+          products.push(productLocalStorage[i].idKanap);
+      }
+      console.log(products);
+
+//-------------------------------------------------
+
+      // Récupération des données du formulaire et des produits dans un objet
+      const cartData = {
+        contact,
+        products,
+      };
+
+      console.log(cartData);
+
+      // Envoi des données du formulaire et des produits au serveur avec la méthode POST
+      const checkOut = {
+        method: "POST",
+        body: JSON.stringify(cartData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      fetch("http://localhost:3000/api/products/order", checkOut)
+        .then((response) => response.json())
+        .then((data) => {
+          
+          localStorage.setItem("orderId", data.orderId);
+          
+          if (formCheck()) {
+            document.location.href = `confirmation.html?id=${data.orderId}`;
+          }
+        });
+    }); // addeventlistener fin
+  };
+
+form();
