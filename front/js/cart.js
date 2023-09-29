@@ -178,112 +178,116 @@ quantityChange();
 //////////////////////////// Formulaire ////////////////////////////
 
 form = () => {
-    const order = document.getElementById("order");
-    // console.log(order);
+  const order = document.getElementById("order");
 
-    order.addEventListener("click", (event) => {
-      event.preventDefault();
+  order.addEventListener("click", (event) => {
+    event.preventDefault();
 
-      // Récupération des données du formulaire dans un objet
-      const contact = {
-        firstName: document.getElementById("firstName").value,
-        lastName: document.getElementById("lastName").value,
-        address: document.getElementById("address").value,
-        city: document.getElementById("city").value,
-        email: document.getElementById("email").value,
-      };
+    // Récupération des données du formulaire dans un objet
+    const contact = {
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      address: document.getElementById("address").value,
+      city: document.getElementById("city").value,
+      email: document.getElementById("email").value,
+    };
 
-      function validInput() {
-        
-        // Contrôle du prénom
-        formFirstName = () => {
-          const validFirstName = contact.firstName;
-          if (/^[a-zA-Z--]{2,20}$/.test(validFirstName)) { 
-            firstNameErrorMsg.innerHTML = ""
-            return true;
-          } else {
-            let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
-            firstNameErrorMsg.innerHTML = "Prénom invalide";
-          }
-        };
+    function validInput() {
+      
+      // Créer une variable qui indique si le formulaire est valide ou non
+      let valide = true;
 
-        // Contrôle du nom
-        formName = () => {
-          const validName = contact.lastName;
-
-          if (/^[a-zA-Z\s-]{2,20}$/.test(validName)) {
-            lastNameErrorMsg.innerHTML = ""
-            return true;
-          } else {
-            let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
-            lastNameErrorMsg.innerHTML = "Nom invalide";
-          }
-        };
-
-        // Contrôle de l'adresse
-        formAddress = () => {
-          const validAddress = contact.address;
-          if (/^[a-zA-Z0-9\s-]{2,50}$/.test(validAddress)) {
-            addressErrorMsg.innerHTML = ""
-            return true;
-          } else {
-            let addressErrorMsg = document.getElementById("addressErrorMsg");
-            addressErrorMsg.innerHTML = "Adresse invalide";
-          }
-        };
-
-        // Contrôle de la ville
-        formCity = () => {
-          const validAddress = contact.city;
-          if (/^[a-zA-Z-\s-]{2,20}$/.test(validAddress)) {
-            cityErrorMsg.innerHTML = ""
-            return true;
-          } else {
-            let cityErrorMsg = document.getElementById("cityErrorMsg");
-            cityErrorMsg.innerHTML = "Ville invalide";
-          }
-        };
-
-        // Contrôle de l'email
-        //   [a-zA-Z0-9-_]{1,}@[a-zA-Z0-9-_]{1,}.[a-zA-Z]{1,}
-        formEmail = () => {
-          const validEmail = contact.email;
-          if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(validEmail)) {
-            emailErrorMsg.innerHTML = ""
-            return true;
-          } else {
-            let emailErrorMsg = document.getElementById("emailErrorMsg");
-            emailErrorMsg.innerHTML = "Mail invalide";
-          }
-        };
-      }
-
-      validInput();
-      // Contrôleur
-      // Vérification des informations récupérées
-      //Refresh rapide de la page
-      //location.reload();
-
-      formCheck = () => {
-        if (
-          formFirstName() &&
-          formName() &&
-          formAddress() &&
-          formCity() &&
-          formEmail()
-        ) {
-          // Envoi des informations dans le local storage
-          // localStorage.setItem('contact', JSON.stringify(contact)); // données utilisateur
-          // Méthode booléan
+      // Contrôle du prénom
+      formFirstName = () => {
+        const validFirstName = contact.firstName;
+        if (/^[a-zA-Z--]{2,20}$/.test(validFirstName)) { 
+          firstNameErrorMsg.innerHTML = ""
           return true;
-
         } else {
-          alert("Une erreur est survenue, merci de vérifier vos informations");
+          let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+          firstNameErrorMsg.innerHTML = "Prénom invalide";
+          valide = false; // Mettre la variable à false si le contrôle échoue
         }
       };
 
-      formCheck();
+      // Contrôle du nom
+      formName = () => {
+        const validName = contact.lastName;
 
+        if (/^[a-zA-Z\s-]{2,20}$/.test(validName)) {
+          lastNameErrorMsg.innerHTML = ""
+          return true;
+        } else {
+          let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+          lastNameErrorMsg.innerHTML = "Nom invalide";
+          valide = false; // Mettre la variable à false si le contrôle échoue
+        }
+      };
+
+      // Contrôle de l'adresse
+      formAddress = () => {
+        const validAddress = contact.address;
+        if (/^[a-zA-Z0-9\s-]{2,50}$/.test(validAddress)) {
+          addressErrorMsg.innerHTML = ""
+          return true;
+        } else {
+          let addressErrorMsg = document.getElementById("addressErrorMsg");
+          addressErrorMsg.innerHTML = "Adresse invalide";
+          valide = false; // Mettre la variable à false si le contrôle échoue
+        }
+      };
+
+      // Contrôle de la ville
+      formCity = () => {
+        const validAddress = contact.city;
+        if (/^[a-zA-Z-\s-]{2,20}$/.test(validAddress)) {
+          cityErrorMsg.innerHTML = ""
+          return true;
+        } else {
+          let cityErrorMsg = document.getElementById("cityErrorMsg");
+          cityErrorMsg.innerHTML = "Ville invalide";
+          valide = false; // Mettre la variable à false si le contrôle échoue
+        }
+      };
+
+      // Contrôle de l'email
+      formEmail = () => {
+        const validEmail = contact.email;
+        if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(validEmail)) {
+          emailErrorMsg.innerHTML = ""
+          return true;
+        } else {
+          let emailErrorMsg = document.getElementById("emailErrorMsg");
+          emailErrorMsg.innerHTML = "Mail invalide";
+          valide = false; // Mettre la variable à false si le contrôle échoue
+        }
+      };
+
+      // Appeler les fonctions de contrôle à l'intérieur de la fonction validInput
+      formFirstName();
+      formName();
+      formAddress();
+      formCity();
+      formEmail();
+
+      // Retourner la valeur de la variable valide
+      return valide;
+    }
+
+    // Vérification des informations récupérées
+    formCheck = () => {
+      if (validInput()) { // Appeler la fonction validInput dans la condition du formCheck
+        // Envoi des informations dans le local storage
+        // localStorage.setItem('contact', JSON.stringify(contact)); // données utilisateur
+        // Méthode booléan
+        return true;
+
+      } else {
+        alert("Une erreur est survenue, merci de vérifier vos informations");
+      }
+    };
+
+    formCheck();
 
       //Construction d'un array d'id depuis le local storage
       let products = [];
