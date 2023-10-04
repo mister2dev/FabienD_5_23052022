@@ -1,9 +1,3 @@
-main()
-
-function main(){
-    getArticles();
-}
-
 // Fonction de récupération des données articles de l'API
 function getArticles() {
     fetch("http://localhost:3000/api/products")
@@ -41,22 +35,12 @@ function getArticles() {
                     productObject.classList.add(classTitle); 
                     return productObject
                 };
-
-
-                // let productH3 = document.createElement("h3");
-                // productArticle.appendChild(productH3);
-                // productH3.innerText = article.name;
-                // productH3.classList.add("productName");
-
-                // let productDescription = document.createElement("p");
-                // productArticle.appendChild(productDescription);
-                // productDescription.innerText = article.description;
-                // productDescription.classList.add("productDescription");
             }
         })
 
         .catch(function(error) {
             console.log(error)
         });
+}
 
-    }
+getArticles();

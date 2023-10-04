@@ -1,5 +1,6 @@
 function displayCart (){
-    //  test si il y a déjà des produits dans le local storage
+    // test si il y a déjà des produits dans le local storage
+    // si test negatif, on indique que le panier est vide sans afficher le formulaire
     let productLocalStorage = JSON.parse(localStorage.getItem("cart"));
 
     if (!productLocalStorage) {
@@ -11,7 +12,7 @@ function displayCart (){
         sectionCart.style.display = "none";
     
     } else {
-
+        // sinon on crée les balises une par une pour chaque article
         for (const product in productLocalStorage) {
 
             // Création de la balise "article" et insertion dans la section
@@ -19,9 +20,9 @@ function displayCart (){
             document.querySelector("#cart__items").appendChild(productArticle);
             productArticle.className = "cart__item";
             productArticle.setAttribute("data-id", productLocalStorage[product].idKanap);
-            productArticle.setAttribute("data-color", productLocalStorage[product].color);
+            productArticle.setAttribute("data-color", productLocalStorage[product].colorKanap);
 
-             // Insertion de l'élément "div" pour l'image produit
+            // Insertion de l'élément "div" pour l'image produit
             let productDivImg = document.createElement("div");
             productArticle.appendChild(productDivImg);
             productDivImg.className = "cart__item__img";
@@ -30,7 +31,7 @@ function displayCart (){
             let productImg = document.createElement("img");
             productDivImg.appendChild(productImg);
             productImg.src = productLocalStorage[product].imgKanap;
-            productImg.alt = productLocalStorage.altImgProduit;
+            productImg.alt = productLocalStorage[product].altTxt;
 
             // Insertion de l'élément "div" pour la description produit
             let productItemContent = document.createElement("div");
@@ -115,9 +116,7 @@ function displayCart (){
                 //Refresh rapide de la page
                 location.reload();
             });
-
-
-        }    
+        }
     }
 }
 
@@ -140,6 +139,7 @@ function getTotal() {
 
 getTotal();
 
+// affichage du résultat
 function displayResults() {
     document.querySelector("#totalQuantity").innerHTML = qtyTotal;
     document.querySelector("#totalPrice").innerHTML = priceTotal;
@@ -171,8 +171,8 @@ function quantityChange() {
         }
       }
     };
+    
 quantityChange();
-
 
 
 //////////////////////////// Formulaire ////////////////////////////
@@ -220,7 +220,7 @@ form = () => {
         } else {
           let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
           lastNameErrorMsg.innerHTML = "Nom invalide";
-          valide = false; // Mettre la variable à false si le contrôle échoue
+          valide = false;
         }
       };
 
@@ -233,7 +233,7 @@ form = () => {
         } else {
           let addressErrorMsg = document.getElementById("addressErrorMsg");
           addressErrorMsg.innerHTML = "Adresse invalide";
-          valide = false; // Mettre la variable à false si le contrôle échoue
+          valide = false;
         }
       };
 
@@ -246,7 +246,7 @@ form = () => {
         } else {
           let cityErrorMsg = document.getElementById("cityErrorMsg");
           cityErrorMsg.innerHTML = "Ville invalide";
-          valide = false; // Mettre la variable à false si le contrôle échoue
+          valide = false;
         }
       };
 
@@ -259,7 +259,7 @@ form = () => {
         } else {
           let emailErrorMsg = document.getElementById("emailErrorMsg");
           emailErrorMsg.innerHTML = "Mail invalide";
-          valide = false; // Mettre la variable à false si le contrôle échoue
+          valide = false;
         }
       };
 
@@ -277,9 +277,7 @@ form = () => {
     // Vérification des informations récupérées
     formCheck = () => {
       if (validInput()) { // Appeler la fonction validInput dans la condition du formCheck
-        // Envoi des informations dans le local storage
-        // localStorage.setItem('contact', JSON.stringify(contact)); // données utilisateur
-        // Méthode booléan
+        // Envoi des informations dans le local storage si la variable valide est "true"
         return true;
 
       } else {
@@ -325,7 +323,7 @@ form = () => {
             document.location.href = `confirmation.html?id=${data.orderId}`;
           }
         });
-    }); // addeventlistener fin
+    });
   };
 
 form();

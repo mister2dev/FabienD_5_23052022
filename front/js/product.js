@@ -1,13 +1,6 @@
 let adress = new URL(window.location.href).searchParams;
 let id = adress.get("id");
 
-
-main()
-
-function main(){
-    getArticles();
-}
-
 // Fonction de récupération de l'id dans l'url
 function getArticles(){
 
@@ -47,16 +40,14 @@ function getArticles(){
         });
 }
 
+getArticles();
+
 let addToCartBtn = document.getElementById("addToCart");
 addToCartBtn.addEventListener("click", addToCart);
 
 function addToCart(){
     const quantityChoice = document.querySelector("#quantity");
     const colorChoice = document.querySelector('#colors');
-
-    // let imgProduct = document.querySelector(".item__img");
-    // let img = document.createElement("img");
-    // imgProduct.appendChild(img);
 
     //  création d'un array
     let productCart = []
@@ -82,12 +73,12 @@ function addToCart(){
 
     if (quantityChoice.value > 0 && quantityChoice.value <= 100 & colorChoice.value != 0) {
 
-        //  test si il y a déjà des produits dans le local storage
+        // test si il y a déjà des produits dans le local storage
         if (localStorage.getItem("cart")){
-            let productCart = JSON.parse(localStorage.getItem("cart"));
+            productCart = JSON.parse(localStorage.getItem("cart"));
             console.log(productCart);
 
-            //  test si le produit commandé est déjà dans le panier
+            // test si le produit commandé est déjà dans le panier
             const resultFind = productCart.find(alreadyInCart => alreadyInCart.idKanap === id && alreadyInCart.colorKanap === colorKanap);
             console.log("result find :");
             console.log(resultFind);
@@ -96,24 +87,22 @@ function addToCart(){
                 let upDateQty = parseInt(qtyKanap) + parseInt(resultFind.qtyKanap);
                 console.log("upDateQty : " + upDateQty);
                 resultFind.qtyKanap = upDateQty.toString();
-                localStorage.setItem("cart", JSON.stringify(productCart));
+                saveToLocalStorage();
                 console.log(productCart);
             } else {
                 productCart.push(productCartObject);
-                let objCart = JSON.stringify(productCart);
-                localStorage.setItem("cart", objCart);
-                console.log(productCart);
-                alert("Ajouté au panier !")
+                saveToLocalStorage();
             }
         } else {
-        //  on injecte l'objet dans le array
+        // on injecte l'objet dans le array puis le tout dans le local storage
         productCart.push(productCartObject);
-
-        // on injecte le tout dans le local storage
+        saveToLocalStorage();
+        }
+        alert("Ajouté au panier !");
+    }
+    function saveToLocalStorage() {
         let objCart = JSON.stringify(productCart);
         localStorage.setItem("cart", objCart);
         console.log(productCart);
-        alert("Ajouté au panier !");
-        }
     }
 }
