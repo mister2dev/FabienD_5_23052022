@@ -5,7 +5,7 @@ function getArticles() {
             return res.json();
         })
 
-// Fonction d'affichage des articles sur la page index (nom, description et image)
+        // Fonction d'affichage des articles sur la page index (nom, description et image)
         .then(function(articles){
 
             for (let article of articles) {
@@ -28,7 +28,8 @@ function getArticles() {
                 productArticle.appendChild(
                     createElm ("p", article.description, "productDescription")
                 );
-
+                
+                // Fonction de création de balise
                 function createElm (balise, content, classTitle){
                     let productObject = document.createElement(balise);
                     productObject.innerText = content;
@@ -38,6 +39,7 @@ function getArticles() {
             }
         })
 
+        // affichage dans la console d'une erreur en cas de non réponse
         .catch(function(error) {
             console.log(error)
         });

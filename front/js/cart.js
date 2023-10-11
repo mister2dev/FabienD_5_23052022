@@ -1,3 +1,4 @@
+// Fonction d'affichage de la commande
 function displayCart (){
     // test si il y a déjà des produits dans le local storage
     // si test negatif, on indique que le panier est vide sans afficher le formulaire
@@ -127,7 +128,7 @@ let priceTotal = 0;
 let productLocalStorage = JSON.parse(localStorage.getItem("cart"));
 
 
-// récupération des quantitées total et du prix total
+// Fonction de récupération des quantitées total et du prix total
 function getTotal() {
     if (productLocalStorage) {
         for (let t = 0; t < productLocalStorage.length; t++) {
@@ -139,7 +140,7 @@ function getTotal() {
 
 getTotal();
 
-// affichage du résultat
+// Fonction affichage du résultat
 function displayResults() {
     document.querySelector("#totalQuantity").innerHTML = qtyTotal;
     document.querySelector("#totalPrice").innerHTML = priceTotal;
@@ -147,6 +148,7 @@ function displayResults() {
 
 displayResults();
 
+// Fonction changement de quantité et mise à jour du prix total 
 function quantityChange() {
     let itemQtyChange = document.querySelectorAll(".itemQuantity");
     if (productLocalStorage) {
@@ -177,6 +179,8 @@ quantityChange();
 
 //////////////////////////// Formulaire ////////////////////////////
 
+
+// Fonction de formulaire de contact
 form = () => {
   const order = document.getElementById("order");
 
@@ -192,6 +196,7 @@ form = () => {
       email: document.getElementById("email").value,
     };
 
+    // Fonction de validation des entrées pour la bonne correspondance avec le résultat envoyé à l'API
     function validInput() {
       
       // Créer une variable qui indique si le formulaire est valide ou non
@@ -274,7 +279,7 @@ form = () => {
       return valide;
     }
 
-    // Vérification des informations récupérées
+    // Fonction de vérification des informations récupérées
     formCheck = () => {
       if (validInput()) { // Appeler la fonction validInput dans la condition du formCheck
         // Envoi des informations dans le local storage si la variable valide est "true"
@@ -294,7 +299,6 @@ form = () => {
       }
       console.log(products);
 
-//-------------------------------------------------
 
       // Récupération des données du formulaire et des produits dans un objet
       const cartData = {

@@ -33,8 +33,9 @@ function getArticles(){
                     option.innerText = color;
                     colorSelect.appendChild(option);
                 }
-            })
+        })
 
+        // affichage dans la console d'une erreur en cas de non réponse
         .catch(function(error) {
             alert(error)
         });
@@ -45,6 +46,8 @@ getArticles();
 let addToCartBtn = document.getElementById("addToCart");
 addToCartBtn.addEventListener("click", addToCart);
 
+
+// Fonction d'ajout de l'article au panier
 function addToCart(){
     const quantityChoice = document.querySelector("#quantity");
     const colorChoice = document.querySelector('#colors');
@@ -100,6 +103,7 @@ function addToCart(){
         }
         alert("Ajouté au panier !");
     }
+    // Fonctione de sauvegarde dans le local storage
     function saveToLocalStorage() {
         let objCart = JSON.stringify(productCart);
         localStorage.setItem("cart", objCart);
