@@ -15,12 +15,14 @@ vendre ses produits sur Internet.
 
 ## Front end
 
-Pour démarrer la page d'accueil, il faut utiliser un serveur local comme le plugin live server sur vs code.
+- Pour démarrer la page d'accueil, il faut utiliser un serveur local comme le plugin live server sur vs code.
+- Démarrer live server depuis la page index.html.
 
 ## Back end
 
 - Node et npm doivent être installés localement sur la machine.
 - Cloner ce repo dans le dossier "back" du projet.
+- Se positionner dans le dossier "back".
 - Effectuer un `npm install`.
-- Démarrer le serveur avec la commande `node server`.
+- Démarrer le serveur avec la commande `node server` depuis ce même dossier.
 - Le serveur va fonctionner sur `localhost` avec le port par défaut `3000`, ou un autre si besoin qui sera indiqué dans la console `Listening on port 3001`.
