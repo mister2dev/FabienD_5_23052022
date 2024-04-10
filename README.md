@@ -1,6 +1,6 @@
 # Kanap
 
-## Projet 4 du parcours Développeur Web d'Openclassrooms.
+## Projet 5 du parcours Développeur Web d'Openclassrooms.
 
 Kanap est une marque de canapés qui vend ses produits depuis sa boutique exclusivement.
 Celle-ci souhaiterait avoir une plateforme de e-commerce en plus de sa boutique physique pour
