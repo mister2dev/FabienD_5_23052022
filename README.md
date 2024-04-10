@@ -6,7 +6,7 @@ Kanap est une marque de canapés qui vend ses produits depuis sa boutique exclus
 Celle-ci souhaiterait avoir une plateforme de e-commerce en plus de sa boutique physique pour
 vendre ses produits sur Internet.
 
-![Maquette](images/sample.jpg)
+![Maquette](front/images/sample.jpg)
 
 ## Objectifs
 
