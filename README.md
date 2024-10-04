@@ -1,15 +1,27 @@
-# Kanap #
+# KANAP
 
-This is the front end and back end server for Project 5 of the Web Developer path.
+## Projet 5 du parcours Développeur Web d'Openclassrooms.
 
-### Back end Prerequisites ###
+Kanap est une marque de canapés qui vend ses produits depuis sa boutique exclusivement.
+Celle-ci souhaiterait avoir une plateforme de e-commerce en plus de sa boutique physique pour
+vendre ses produits sur Internet.
 
-You will need to have Node and `npm` installed locally on your machine.
+![Maquette](front/images/sample.png)
 
-### Back end Installation ###
+## Objectifs
 
-Clone this repo. From the "back" folder of the project, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
+- Intégrer dynamiquement les éléments de l’API dans les différentes pages web avec JavaScript.
+- Mettre en place un plan de test d’acceptation.
+
+## Front end
+
+- Pour démarrer la page d'accueil, il faut utiliser un serveur local comme le plugin live server sur vs code.
+- Démarrer live server depuis la page index.html.
+
+## Back end
+
+- Node et npm doivent être installés localement sur la machine.
+- Cloner ce repo dans le dossier "back" du projet.
+- Effectuer un `npm install` depuis ce même dossier.
+- Puis y démarrer le serveur avec la commande `node server`.
+- Le serveur va fonctionner sur `localhost` avec le port par défaut `3000`, ou un autre si besoin qui sera indiqué dans la console `Listening on port 3001`.
