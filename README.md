@@ -21,7 +21,7 @@ vendre ses produits sur Internet.
 ## Back end
 
 - Node et npm doivent être installés localement sur la machine.
-- Cloner ce repo dans le dossier "back" du projet.
-- Effectuer un `npm install` depuis ce même dossier.
+- Cloner ce repo.
+- Effectuer un `npm install` depuis le dossier back.
 - Puis y démarrer le serveur avec la commande `node server`.
 - Le serveur va fonctionner sur `localhost` avec le port par défaut `3000`, ou un autre si besoin qui sera indiqué dans la console `Listening on port 3001`.
