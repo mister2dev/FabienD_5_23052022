@@ -265,7 +265,6 @@ form = () => {
       }
     };
 
-    // On appele les fonctions de contrôle à l'intérieur de la fonction validInput
     formFirstName();
     formName();
     formAddress();
