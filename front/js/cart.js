@@ -205,29 +205,35 @@ form = () => {
     // Créer une variable qui indique si le formulaire est valide ou non
     let valideInput = true;
 
-    // Contrôle du prénom
-    formFirstName = () => {
-      let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
-      const validFirstName = contact.firstName;
-      if (/^[a-zA-Z--]{2,20}$/.test(validFirstName)) {
-        firstNameErrorMsg.innerHTML = "";
+    function names(contactValue, regex, errorMsgId, errorMsg) {
+      let errorMsgElement = document.getElementById(errorMsgId);
+      if (regex.test(contactValue)) {
+        errorMsgElement.innerHTML = "";
       } else {
-        firstNameErrorMsg.innerHTML = "Prénom invalide";
-        valideInput = false; // Mettre la variable à false si le contrôle échoue
-      }
-    };
-
-    // Contrôle du nom
-    formName = () => {
-      let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
-      const validName = contact.lastName;
-      if (/^[a-zA-Z\s-]{2,20}$/.test(validName)) {
-        lastNameErrorMsg.innerHTML = "";
-      } else {
-        lastNameErrorMsg.innerHTML = "Nom invalide";
+        errorMsgElement.innerHTML = errorMsg;
         valideInput = false;
       }
-    };
+    }
+
+    // Utilisation pour le contrôle du prénom
+    function formFirstName() {
+      return names(
+        contact.firstName,
+        /^[a-zA-Z-]{2,20}$/,
+        "firstNameErrorMsg",
+        "Prénom invalide"
+      );
+    }
+
+    // Utilisation pour le contrôle du nom
+    function formName() {
+      return names(
+        contact.lastName,
+        /^[a-zA-Z\s-]{2,20}$/,
+        "lastNameErrorMsg",
+        "Nom invalide"
+      );
+    }
 
     // Contrôle de l'adresse
     formAddress = () => {
