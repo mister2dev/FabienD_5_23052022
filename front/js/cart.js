@@ -1,7 +1,19 @@
 // Fonction d'affichage de la commande
 let productLocalStorage = JSON.parse(localStorage.getItem("cart"));
 
-function displayCart() {
+async function getPrice(productId) {
+  try {
+    let response = await fetch(
+      `http://localhost:3000/api/products/${productId}`
+    );
+    let product = await response.json();
+    return product.price;
+  } catch (error) {
+    console.error("Erreur du prix :", error);
+  }
+}
+
+async function displayCart() {
   // On test s'il y a des produits dans le local storage, on indique que le panier est vide sans afficher le formulaire si celui ci est vide
   if (!productLocalStorage) {
     const titleCart = document.querySelector("h1");
@@ -59,7 +71,8 @@ function displayCart() {
       // Insertion du prix
       let productPrice = document.createElement("p");
       productItemContentDescription.appendChild(productPrice);
-      productPrice.innerHTML = productLocalStorage[product].priceKanap + " €";
+      productPrice.innerHTML =
+        (await getPrice(productLocalStorage[product].idKanap)) + " €";
 
       // Insertion de l'élément "div"
       let productItemContentSettings = document.createElement("div");
@@ -114,39 +127,33 @@ function displayCart() {
 
         // Envoyer les nouvelles données dans le localStorage
         localStorage.setItem("cart", JSON.stringify(productLocalStorage));
-
-        // Avertir de la suppression et recharger la page
+        productArticle.remove();
+        // Avertir de la suppression
         alert("Votre article a bien été supprimé.");
 
         // Si pas de produits dans le local storage on affiche que le panier est vide
         if (productLocalStorage.length === 0) {
           localStorage.clear();
         }
-        // Refresh rapide de la page
-        location.reload();
       });
     }
   }
 }
 
-displayCart();
-
 let qtyTotal = 0;
 let priceTotal = 0;
 
 // Fonction de récupération des quantitées total et du prix total
-function getTotal() {
+async function getTotal() {
   if (productLocalStorage) {
     for (let t = 0; t < productLocalStorage.length; t++) {
       qtyTotal += parseInt(productLocalStorage[t].qtyKanap);
       priceTotal +=
-        parseInt(productLocalStorage[t].priceKanap) *
+        parseInt(await getPrice(productLocalStorage[t].idKanap)) *
         parseInt(productLocalStorage[t].qtyKanap);
     }
   }
 }
-
-getTotal();
 
 // Fonction affichage du résultat
 function displayResults() {
@@ -154,22 +161,20 @@ function displayResults() {
   document.querySelector("#totalPrice").innerHTML = priceTotal;
 }
 
-displayResults();
-
 // Fonction changement de quantité et mise à jour du prix total
-function quantityChange() {
+async function quantityChange() {
   let itemQtyChange = document.querySelectorAll(".itemQuantity");
 
   if (productLocalStorage) {
     for (let c = 0; c < productLocalStorage.length; c++) {
-      itemQtyChange[c].addEventListener("change", function () {
+      itemQtyChange[c].addEventListener("change", async function () {
         if (itemQtyChange[c].value > 0) {
           //Modification des totaux + affichage
           let quantityDiff =
             itemQtyChange[c].value - productLocalStorage[c].qtyKanap;
           qtyTotal += quantityDiff;
-          priceTotal += quantityDiff * productLocalStorage[c].priceKanap;
-
+          priceTotal +=
+            quantityDiff * (await getPrice(productLocalStorage[c].idKanap));
           //Affichage mis à jour
           displayResults();
 
@@ -181,9 +186,12 @@ function quantityChange() {
     }
   }
 }
-
-quantityChange();
-
+document.addEventListener("DOMContentLoaded", async function () {
+  await displayCart();
+  await getTotal();
+  displayResults();
+  quantityChange();
+});
 //////////////////////////// Formulaire ////////////////////////////
 
 // Fonction de formulaire de contact

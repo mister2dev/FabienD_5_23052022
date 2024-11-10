@@ -87,7 +87,6 @@ function createProductObject() {
   let nameKanap = document.querySelector("#title").textContent;
   let imgKanap = document.querySelector("div.item__img img").src;
   let altTxt = document.querySelector("div.item__img img").alt;
-  let priceKanap = document.querySelector("#price").textContent;
 
   return {
     idKanap,
@@ -96,7 +95,6 @@ function createProductObject() {
     nameKanap,
     imgKanap,
     altTxt,
-    priceKanap,
   };
 }
 
