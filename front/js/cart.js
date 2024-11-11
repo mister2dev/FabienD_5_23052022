@@ -13,14 +13,18 @@ async function getPrice(productId) {
   }
 }
 
+function displayNone() {
+  const titleCart = document.querySelector("h1");
+  const sectionCart = document.querySelector(".cart");
+
+  titleCart.innerHTML = "Votre panier est vide !";
+  sectionCart.style.display = "none";
+}
+
 async function displayCart() {
   // On test s'il y a des produits dans le local storage, on indique que le panier est vide sans afficher le formulaire si celui ci est vide
   if (!productLocalStorage) {
-    const titleCart = document.querySelector("h1");
-    const sectionCart = document.querySelector(".cart");
-
-    titleCart.innerHTML = "Votre panier est vide !";
-    sectionCart.style.display = "none";
+    displayNone();
   } else {
     // sinon on crée les balises une par une pour chaque article
     for (const product in productLocalStorage) {
@@ -134,6 +138,7 @@ async function displayCart() {
         // Si pas de produits dans le local storage on affiche que le panier est vide
         if (productLocalStorage.length === 0) {
           localStorage.clear();
+          displayNone();
         }
       });
     }
