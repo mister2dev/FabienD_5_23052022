@@ -8,7 +8,7 @@ async function getPrice(productId) {
       // `http://localhost:3000/api/products/${productId}`
       // Version en ligne
       fetch(
-        "https://fabiend-5-23052022-1.onrender.com/api/products/${productId}"
+        `https://fabiend-5-23052022-1.onrender.com/api/products/${productId}`
       )
     );
     let product = await response.json();
