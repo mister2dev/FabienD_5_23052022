@@ -4,7 +4,10 @@ let id = adress.get("id");
 
 // Fonction de récupération des données articles de l'API selon l'id
 function getArticles() {
-  fetch(`http://localhost:3000/api/products/${id}`)
+  // Version local
+  // fetch(`http://localhost:3000/api/products/${id}`)
+  //Version en ligne
+  fetch("https://backend-service.onrender.com/api/products/${id}")
     .then(function (res) {
       return res.json();
     })

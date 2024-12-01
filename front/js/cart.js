@@ -4,7 +4,10 @@ let productLocalStorage = JSON.parse(localStorage.getItem("cart"));
 async function getPrice(productId) {
   try {
     let response = await fetch(
-      `http://localhost:3000/api/products/${productId}`
+      // Version local
+      // `http://localhost:3000/api/products/${productId}`
+      // Version en ligne
+      fetch("https://backend-service.onrender.com/api/products/${productId}")
     );
     let product = await response.json();
     return product.price;
@@ -315,7 +318,8 @@ form = () => {
       },
     };
 
-    fetch("http://localhost:3000/api/products/order", checkOut)
+    // fetch("http://localhost:3000/api/products/order", checkOut)
+    fetch("https://backend-service.onrender.com/api/products/order", checkOut)
       .then((response) => response.json())
       .then((data) => {
         localStorage.setItem("orderId", data.orderId);

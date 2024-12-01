@@ -1,6 +1,9 @@
 // Fonction de récupération des données articles de l'API
 function getArticles() {
-  fetch("http://localhost:3000/api/products")
+  // Version local
+  // fetch("http://localhost:3000/api/products")
+  // Version en ligne
+  fetch("https://backend-service.onrender.com/api/products")
     .then(function (res) {
       return res.json();
     })
