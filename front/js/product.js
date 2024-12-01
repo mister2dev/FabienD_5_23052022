@@ -7,7 +7,7 @@ function getArticles() {
   // Version local
   // fetch(`http://localhost:3000/api/products/${id}`)
   //Version en ligne
-  fetch("https://fabiend-5-23052022-1.onrender.com/api/products/${id}")
+  fetch("https://fabiend-5-23052022.onrender.com/api/products/${id}")
     .then(function (res) {
       return res.json();
     })
