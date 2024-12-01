@@ -3,7 +3,7 @@ function getArticles() {
   // Version local
   // fetch("http://localhost:3000/api/products")
   // Version en ligne
-  fetch("https://backend-service.onrender.com/api/products")
+  fetch("https://fabiend-5-23052022-1.onrender.com/api/products")
     .then(function (res) {
       return res.json();
     })
