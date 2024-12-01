@@ -8,7 +8,7 @@ const app = express();
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://fabiend-5-23052022-1.onrender.com/"
+    "https://fabiend-5-23052022-1.onrender.com/api/products"
   ); // Remplacez par l'URL de votre frontend
   res.setHeader(
     "Access-Control-Allow-Headers",
