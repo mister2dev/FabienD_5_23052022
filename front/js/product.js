@@ -37,6 +37,32 @@ function getArticles() {
     });
 }
 
+function displaytest(message) {
+  oldMessage();
+  const textContent = document.querySelector(".item__content");
+  textContent.style.position = "relative";
+
+  let span = document.createElement("span");
+  span.classList.add("statusMsg");
+  span.innerText = message;
+
+  span.style.fontSize = "24px";
+  span.style.position = "absolute";
+  span.style.bottom = "-40px";
+  span.style.left = "50%";
+  span.style.transform = "translateX(-50%)";
+  span.style.color = "red";
+  span.style.textAlign = "center";
+  span.style.whiteSpace = "nowrap";
+
+  textContent.appendChild(span);
+}
+
+function oldMessage() {
+  let oldMessage = document.querySelector(".statusMsg");
+  if (oldMessage) oldMessage.remove();
+}
+
 getArticles();
 
 // Fonction d'ajout au panier
@@ -46,14 +72,16 @@ function addToCart() {
 
   // Vérifier si la quantité est valide et si une couleur a été choisie
   if (quantityChoice.value <= 0 || quantityChoice.value > 100) {
-    alert("Veuillez sélectionner une quantité valide (entre 1 et 100).");
+    displaytest("Veuillez sélectionner une quantité valide (entre 1 et 100).");
     return;
   }
 
   if (!colorChoice.value) {
-    alert("Veuillez sélectionner une couleur.");
+    displaytest("Veuillez sélectionner une couleur.");
     return;
   }
+
+  oldMessage();
 
   // Récupérer les informations du produit
   let productCart = getCartFromLocalStorage();
@@ -71,11 +99,11 @@ function addToCart() {
     existingProduct.qtyKanap = (
       parseInt(existingProduct.qtyKanap) + parseInt(productCartObject.qtyKanap)
     ).toString();
-    alert("Quantité mise à jour !");
+    displaytest("Quantité mise à jour !");
   } else {
     // Sinon ajout du nouveau produit au panier
     productCart.push(productCartObject);
-    alert("Produit ajouté au panier !");
+    displaytest("Produit ajouté au panier !");
   }
 
   // Sauvegarder les modifications dans le localStorage
