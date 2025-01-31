@@ -37,7 +37,7 @@ function getArticles() {
     });
 }
 
-function displaytest(message) {
+function displayMessage(message) {
   oldMessage();
   const textContent = document.querySelector(".item__content");
   textContent.style.position = "relative";
@@ -51,7 +51,7 @@ function displaytest(message) {
   span.style.bottom = "-40px";
   span.style.left = "50%";
   span.style.transform = "translateX(-50%)";
-  span.style.color = "red";
+  span.style.color = "#fbbcbc";
   span.style.textAlign = "center";
   span.style.whiteSpace = "nowrap";
 
@@ -72,12 +72,14 @@ function addToCart() {
 
   // Vérifier si la quantité est valide et si une couleur a été choisie
   if (quantityChoice.value <= 0 || quantityChoice.value > 100) {
-    displaytest("Veuillez sélectionner une quantité valide (entre 1 et 100).");
+    displayMessage(
+      "Veuillez sélectionner une quantité valide (entre 1 et 100)."
+    );
     return;
   }
 
   if (!colorChoice.value) {
-    displaytest("Veuillez sélectionner une couleur.");
+    displayMessage("Veuillez sélectionner une couleur.");
     return;
   }
 
@@ -99,11 +101,11 @@ function addToCart() {
     existingProduct.qtyKanap = (
       parseInt(existingProduct.qtyKanap) + parseInt(productCartObject.qtyKanap)
     ).toString();
-    displaytest("Quantité mise à jour !");
+    displayMessage("Quantité mise à jour !");
   } else {
     // Sinon ajout du nouveau produit au panier
     productCart.push(productCartObject);
-    displaytest("Produit ajouté au panier !");
+    displayMessage("Produit ajouté au panier !");
   }
 
   // Sauvegarder les modifications dans le localStorage

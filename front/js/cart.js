@@ -290,9 +290,9 @@ form = () => {
     formCity();
     formEmail();
 
-    if (valideInput === false) {
-      alert("Une erreur est survenue, merci de vérifier vos informations");
-    }
+    // if (valideInput === false) {
+    //   alert("Une erreur est survenue, merci de vérifier vos informations");
+    // }
 
     //Construction d'un array d'id depuis le local storage
     let products = [];
