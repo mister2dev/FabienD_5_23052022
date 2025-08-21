@@ -1,5 +1,5 @@
 // Fonction d'affichage de la commande
-let productLocalStorage = JSON.parse(localStorage.getItem("cart"));
+let productLocalStorage = JSON.parse(localStorage.getItem("cart")) || [];
 
 async function getPrice(productId) {
   try {
@@ -140,7 +140,7 @@ async function displayCart() {
 
       // Si pas de produits dans le local storage on affiche que le panier est vide
       if (productLocalStorage.length === 0) {
-        localStorage.clear();
+        localStorage.removeItem("cart");
         displayNone();
       }
     });
@@ -168,27 +168,31 @@ function displayResults() {
   document.querySelector("#totalPrice").innerHTML = priceTotal;
 }
 
-// Fonction changement de quantité et mise à jour du prix total
+// Fonction changement de quantité et mise à jour du prix total (robuste)
 async function quantityChange() {
-  let itemQtyChange = document.querySelectorAll(".itemQuantity");
-  if (productLocalStorage) {
-    for (let c = 0; c < productLocalStorage.length; c++) {
-      itemQtyChange[c].addEventListener("change", async function () {
-        if (itemQtyChange[c].value > 0) {
-          //Modification des totaux + affichage
-          let quantityDiff =
-            itemQtyChange[c].value - productLocalStorage[c].qtyKanap;
-          qtyTotal += quantityDiff;
-          priceTotal +=
-            quantityDiff * (await getPrice(productLocalStorage[c].idKanap));
-          //Affichage mis à jour
-          displayResults();
-          //Ajout des modifications dans le localStorage
-          productLocalStorage[c].qtyKanap = itemQtyChange[c].value;
-          localStorage.setItem("cart", JSON.stringify(productLocalStorage));
-        }
-      });
-    }
+  const itemQtyChange = document.querySelectorAll(".itemQuantity");
+  if (!productLocalStorage) return;
+  for (let c = 0; c < productLocalStorage.length; c++) {
+    itemQtyChange[c].addEventListener("change", async function () {
+      let newQty = parseInt(itemQtyChange[c].value, 10);
+      if (isNaN(newQty) || newQty < 1) newQty = 1;
+      if (newQty > 100) newQty = 100;
+
+      // Si ajustement nécessaire, on le reflète dans l'input
+      if (itemQtyChange[c].value !== String(newQty)) {
+        itemQtyChange[c].value = String(newQty);
+      }
+
+      // Mise à jour immédiate du panier pour éviter les conditions de course
+      productLocalStorage[c].qtyKanap = newQty;
+      localStorage.setItem("cart", JSON.stringify(productLocalStorage));
+
+      // Recalcul complet des totaux
+      qtyTotal = 0;
+      priceTotal = 0;
+      await getTotal();
+      displayResults();
+    });
   }
 }
 document.addEventListener("DOMContentLoaded", async function () {
@@ -200,7 +204,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 //////////////////////////// Formulaire ////////////////////////////
 
 // Fonction de formulaire de contact
-form = () => {
+const form = () => {
   const order = document.getElementById("order");
 
   order.addEventListener("click", (event) => {
@@ -249,7 +253,7 @@ form = () => {
     }
 
     // Contrôle de l'adresse
-    formAddress = () => {
+    const formAddress = () => {
       let addressErrorMsg = document.getElementById("addressErrorMsg");
       const validAddress = contact.address;
       if (/^[a-zA-Z0-9\s-]{2,50}$/.test(validAddress)) {
@@ -261,7 +265,7 @@ form = () => {
     };
 
     // Contrôle de la ville
-    formCity = () => {
+    const formCity = () => {
       let cityErrorMsg = document.getElementById("cityErrorMsg");
       const validAddress = contact.city;
       if (/^[a-zA-Z-\s-]{2,20}$/.test(validAddress)) {
@@ -273,7 +277,7 @@ form = () => {
     };
 
     // Contrôle de l'email
-    formEmail = () => {
+    const formEmail = () => {
       let emailErrorMsg = document.getElementById("emailErrorMsg");
       const validEmail = contact.email;
       if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(validEmail)) {
@@ -307,27 +311,26 @@ form = () => {
     };
 
     // Envoi des données du formulaire et des produits au serveur avec la méthode POST
-    const checkOut = {
-      method: "POST",
-      body: JSON.stringify(cartData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    if (valideInput) {
+      const checkOut = {
+        method: "POST",
+        body: JSON.stringify(cartData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    // fetch("http://localhost:3000/api/products/order", checkOut)
-    fetch(
-      "https://fabiend-5-23052022-1.onrender.com/api/products/order",
-      checkOut
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        localStorage.setItem("orderId", data.orderId);
-
-        if (valideInput) {
+      // fetch("http://localhost:3000/api/products/order", checkOut)
+      fetch(
+        "https://fabiend-5-23052022-1.onrender.com/api/products/order",
+        checkOut
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          localStorage.setItem("orderId", data.orderId);
           document.location.href = `confirmation.html?id=${data.orderId}`;
-        }
-      });
+        });
+    }
   });
 };
 
