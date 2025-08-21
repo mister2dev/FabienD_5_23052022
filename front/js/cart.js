@@ -1,18 +1,27 @@
 // Fonction d'affichage de la commande
 let productLocalStorage = JSON.parse(localStorage.getItem("cart")) || [];
 
+// Cache des prix pour éviter les appels réseau répétés
+const priceCache = new Map();
+
 async function getPrice(productId) {
+  // Utiliser le cache si disponible
+  if (priceCache.has(productId)) {
+    return priceCache.get(productId);
+  }
+
   try {
-    let response =
-      await // fetch(`http://localhost:3000/api/products/${productId}`);
-      // Version local
-      fetch(
-        `https://fabiend-5-23052022-1.onrender.com/api/products/${productId}`
-      ); // Version en ligne
+    let response = await fetch(
+      `https://fabiend-5-23052022-1.onrender.com/api/products/${productId}`
+    );
     let product = await response.json();
+
+    // Stocker dans le cache
+    priceCache.set(productId, product.price);
     return product.price;
   } catch (error) {
     console.error("Erreur du prix :", error);
+    return 0; // Valeur par défaut en cas d'erreur
   }
 }
 
@@ -22,11 +31,17 @@ function displayNone() {
 }
 
 async function displayCart() {
-  // On test s'il y a des produits dans le local storage, on indique que le panier est vide sans afficher le formulaire si celui ci est vide
+  // On test s'il y a des produits dans le local storage
   if (productLocalStorage.length === 0) {
     displayNone();
     return;
   }
+
+  // Pré-charger tous les prix en une seule fois
+  const pricePromises = productLocalStorage.map((product) =>
+    getPrice(product.idKanap)
+  );
+  await Promise.all(pricePromises);
 
   // sinon on crée les balises une par une pour chaque article
   for (const product in productLocalStorage) {
@@ -74,11 +89,11 @@ async function displayCart() {
     productItemContentDescription.appendChild(productColor);
     productColor.innerHTML = productLocalStorage[product].colorKanap;
 
-    // Insertion du prix
+    // Insertion du prix (maintenant synchrone grâce au cache)
     let productPrice = document.createElement("p");
     productItemContentDescription.appendChild(productPrice);
     productPrice.innerHTML =
-      (await getPrice(productLocalStorage[product].idKanap)) + " €";
+      priceCache.get(productLocalStorage[product].idKanap) + " €";
 
     // Insertion de l'élément "div"
     let productItemContentSettings = document.createElement("div");
@@ -133,10 +148,8 @@ async function displayCart() {
       localStorage.setItem("cart", JSON.stringify(productLocalStorage));
       productArticle.remove();
 
-      qtyTotal = 0;
-      priceTotal = 0;
-      await getTotal();
-      displayResults();
+      // Recalcul synchrone des totaux
+      calculateAndDisplayTotals();
 
       // Si pas de produits dans le local storage on affiche que le panier est vide
       if (productLocalStorage.length === 0) {
@@ -147,60 +160,73 @@ async function displayCart() {
   }
 }
 
-let qtyTotal = 0;
-let priceTotal = 0;
+// Fonction synchrone pour calculer et afficher les totaux
+function calculateAndDisplayTotals() {
+  let qtyTotal = 0;
+  let priceTotal = 0;
 
-// Fonction de récupération des quantitées total et du prix total
-async function getTotal() {
-  if (productLocalStorage) {
-    for (let t = 0; t < productLocalStorage.length; t++) {
-      qtyTotal += parseInt(productLocalStorage[t].qtyKanap);
-      priceTotal +=
-        parseInt(await getPrice(productLocalStorage[t].idKanap)) *
-        parseInt(productLocalStorage[t].qtyKanap);
-    }
+  for (let i = 0; i < productLocalStorage.length; i++) {
+    const qty = parseInt(productLocalStorage[i].qtyKanap);
+    const price = priceCache.get(productLocalStorage[i].idKanap) || 0;
+
+    qtyTotal += qty;
+    priceTotal += price * qty;
   }
-}
 
-// Fonction affichage du résultat
-function displayResults() {
+  // Affichage immédiat
   document.querySelector("#totalQuantity").innerHTML = qtyTotal;
   document.querySelector("#totalPrice").innerHTML = priceTotal;
 }
 
-// Fonction changement de quantité et mise à jour du prix total (robuste)
-async function quantityChange() {
+// Variable pour gérer le debouncing
+let updateTimeout = null;
+
+// Fonction changement de quantité optimisée
+function quantityChange() {
   const itemQtyChange = document.querySelectorAll(".itemQuantity");
   if (!productLocalStorage) return;
+
   for (let c = 0; c < productLocalStorage.length; c++) {
-    itemQtyChange[c].addEventListener("change", async function () {
+    itemQtyChange[c].addEventListener("input", function () {
       let newQty = parseInt(itemQtyChange[c].value, 10);
+
+      // Validation et correction
       if (isNaN(newQty) || newQty < 1) newQty = 1;
       if (newQty > 100) newQty = 100;
 
-      // Si ajustement nécessaire, on le reflète dans l'input
+      // Correction de l'input si nécessaire
       if (itemQtyChange[c].value !== String(newQty)) {
         itemQtyChange[c].value = String(newQty);
       }
 
-      // Mise à jour immédiate du panier pour éviter les conditions de course
+      // Mise à jour immédiate du localStorage
       productLocalStorage[c].qtyKanap = newQty;
       localStorage.setItem("cart", JSON.stringify(productLocalStorage));
 
-      // Recalcul complet des totaux
-      qtyTotal = 0;
-      priceTotal = 0;
-      await getTotal();
-      displayResults();
+      // Debouncing pour éviter les calculs trop fréquents
+      clearTimeout(updateTimeout);
+      updateTimeout = setTimeout(() => {
+        calculateAndDisplayTotals();
+      }, 100); // 100ms de délai
+
+      // Mise à jour immédiate pour un feedback rapide
+      calculateAndDisplayTotals();
+    });
+
+    // Événement change pour la validation finale
+    itemQtyChange[c].addEventListener("change", function () {
+      calculateAndDisplayTotals();
     });
   }
 }
+
+// Initialisation au chargement de la page
 document.addEventListener("DOMContentLoaded", async function () {
   await displayCart();
-  await getTotal();
-  displayResults();
+  calculateAndDisplayTotals();
   quantityChange();
 });
+
 //////////////////////////// Formulaire ////////////////////////////
 
 // Fonction de formulaire de contact
@@ -294,10 +320,6 @@ const form = () => {
     formCity();
     formEmail();
 
-    // if (valideInput === false) {
-    //   alert("Une erreur est survenue, merci de vérifier vos informations");
-    // }
-
     //Construction d'un array d'id depuis le local storage
     let products = [];
     for (let i = 0; i < productLocalStorage.length; i++) {
@@ -320,7 +342,6 @@ const form = () => {
         },
       };
 
-      // fetch("http://localhost:3000/api/products/order", checkOut)
       fetch(
         "https://fabiend-5-23052022-1.onrender.com/api/products/order",
         checkOut
@@ -329,6 +350,9 @@ const form = () => {
         .then((data) => {
           localStorage.setItem("orderId", data.orderId);
           document.location.href = `confirmation.html?id=${data.orderId}`;
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la commande:", error);
         });
     }
   });
